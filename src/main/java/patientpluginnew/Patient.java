@@ -1,6 +1,7 @@
 package patientpluginnew;
 
-import coreapplication.plugin.api.PluginEntity;
+
+import coreapplication.plugin.annotation.PluginEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;

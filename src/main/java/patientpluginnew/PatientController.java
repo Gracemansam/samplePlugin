@@ -1,5 +1,6 @@
 package patientpluginnew;
 
+import coreapplication.audit.Auditable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +60,8 @@ public class PatientController {
     }
 
     @PostMapping
-   // @PreAuthorize("hasRole('patient-management_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or #username == authentication.principal.username")
+    @Auditable(action = "USER_LOGIN", resourceType = "USER")
     public ResponseEntity<Patient> createPatient(@RequestBody @Validated Patient patient) {
         Patient newPatient = patientService.createPatient(patient);
         return ResponseEntity.status(HttpStatus.CREATED).body(newPatient);
@@ -108,4 +111,18 @@ public class PatientController {
     public String getTest(){
         return  " Hello from test plugin";
     }
+
+//    @GetMapping("/health")
+//    @Auditable(excludeFromAudit = true)
+//    public ResponseEntity<String> healthCheck() {
+//        return ResponseEntity.ok("OK");
+//    }
+//
+
+//    @PostMapping("/reports/generate")
+//    @Auditable(action = "DATA_EXPORT", resourceType = "REPORT")
+//    public ResponseEntity<ReportDTO> generateReport(@RequestBody ReportRequest request) {
+//        // Implementation...
+//        return ResponseEntity.ok(reportService.generate(request));
+//    }
 }

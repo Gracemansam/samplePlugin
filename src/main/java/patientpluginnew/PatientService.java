@@ -97,4 +97,49 @@ public class PatientService {
     public long countPatientsByGender(String gender) {
         return patientRepository.countByGender(gender);
     }
+
+    // SAMPLE ON HOW T USE THE AUDIT IN THE SERVICE LAYER
+
+//
+//    @Auditable(action = "SETTINGS_CHANGE", resourceType = "CONFIGURATION")
+//    public ConfigDTO updateConfiguration(String configId, ConfigDTO config) {
+//        // Implementation...
+//        return updatedConfig;
+//    }
+//
+//    // Manual auditing for complex scenarios
+//    public void performBulkOperation(List<String> ids, String operation) {
+//        try {
+//            // Perform operation
+//            // ...
+//
+//            // Log custom audit event manually
+//            auditService.logEvent(
+//                    "my-plugin-id",
+//                    getCurrentUserId(),
+//                    "BULK_" + operation.toUpperCase(),
+//                    "BATCH_PROCESS",
+//                    String.join(",", ids),
+//                    "Processed " + ids.size() + " items",
+//                    "SUCCESS"
+//            );
+//        } catch (Exception e) {
+//            // Log failure audit
+//            auditService.logEvent(
+//                    "my-plugin-id",
+//                    getCurrentUserId(),
+//                    "BULK_" + operation.toUpperCase(),
+//                    "BATCH_PROCESS",
+//                    String.join(",", ids),
+//                    "Error: " + e.getMessage(),
+//                    "FAILURE"
+//            );
+//            throw e;
+//        }
+//    }
+//
+//    private String getCurrentUserId() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        return auth != null ? auth.getName() : "system";
+//    }
 }

@@ -1,33 +1,39 @@
 package patientpluginnew;
 
-import coreapplication.plugin.api.Plugin;
+import coreapplication.logging.AbstractPlugin;
 import coreapplication.plugin.api.PluginInfo;
-
+import org.slf4j.Logger;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Patient Management Plugin
- */
-public class PatientPlugin implements Plugin {
-    private PluginInfo pluginInfo;
+public class PatientPlugin extends AbstractPlugin {
+
+    private static final String PLUGIN_ID = "patient-management";
 
     @Override
     public void initialize(PluginInfo info) {
-        info.setId("patient-management");
-        this.pluginInfo = info;
+
+        info.setId(PLUGIN_ID);
+        super.initialize(info);
+
+        getLogger().info("Patient management plugin initialized with ID: {}", PLUGIN_ID);
     }
 
     @Override
     public void start() {
-        // Logic executed when the plugin is activated
-        System.out.println("Patient management plugin started successfully");
+        Logger logger = getLogger();
+        logger.info("Starting patient management plugin");
+
+        logger.info("Patient management plugin started successfully");
     }
 
     @Override
     public void stop() {
-        // Logic executed when the plugin is deactivated
-        System.out.println("Patient management plugin stopped");
+        Logger logger = getLogger();
+        logger.info("Stopping patient management plugin");
+
+        logger.info("Patient management plugin stopped successfully");
     }
 
     @Override
@@ -49,5 +55,15 @@ public class PatientPlugin implements Plugin {
     public List<String> getDependencies() {
         // This plugin has no dependencies
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<String> getAuditableActions() {
+        return Arrays.asList("USER_LOGIN", "USER_LOGOUT", "DATA_EXPORT", "USER_VIEW", "SETTINGS_CHANGE");
+    }
+
+    @Override
+    public List<String> getAuditableResourceTypes() {
+        return Arrays.asList("USER", "REPORT", "CONFIGURATION", "DATA");
     }
 }
