@@ -1,0 +1,7 @@
+patientpluginnew/PatientPluginNewApplication.class
+patientpluginnew/PatientPlugin.class
+patientpluginnew/Patient.class
+patientpluginnew/PatientService.class
+patientpluginnew/PatientController.class
+patientpluginnew/PatientPluginServiceProvider.class
+patientpluginnew/PatientRepository.class
